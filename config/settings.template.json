@@ -1,0 +1,87 @@
+{
+  "_comment": "Template — replace NODE with full node.exe path and HOOKS_DIR with ~/.claude/hooks absolute path",
+  "cleanupPeriodDays": 14,
+  "skillListingMaxDescChars": 800,
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "NODE HOOKS_DIR/caveman-activate.js",
+            "timeout": 5,
+            "statusMessage": "Loading caveman mode..."
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "NODE HOOKS_DIR/caveman-mode-tracker.js",
+            "timeout": 5,
+            "statusMessage": "Tracking caveman mode..."
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "NODE HOOKS_DIR/effort-router.js",
+            "timeout": 5,
+            "statusMessage": "Routing effort..."
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "NODE NODE_MODULES/ccstatusline/dist/ccstatusline.js --hook"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Skill",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "NODE NODE_MODULES/ccstatusline/dist/ccstatusline.js --hook"
+          }
+        ]
+      }
+    ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "NODE NODE_MODULES/ccstatusline/dist/ccstatusline.js",
+    "padding": 0,
+    "refreshInterval": 10
+  },
+  "enabledPlugins": {
+    "caveman@caveman": true
+  },
+  "extraKnownMarketplaces": {
+    "caveman": {
+      "source": {
+        "source": "github",
+        "repo": "JuliusBrussee/caveman"
+      }
+    }
+  },
+  "outputStyle": "concise",
+  "effortLevel": "medium",
+  "advisorModel": "opus",
+  "autoUpdatesChannel": "stable",
+  "skipDangerousModePermissionPrompt": true,
+  "theme": "auto",
+  "remoteControlAtStartup": true,
+  "inputNeededNotifEnabled": true,
+  "agentPushNotifEnabled": true,
+  "tui": "fullscreen"
+}
